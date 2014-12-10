@@ -11,17 +11,17 @@ class Find_cash():
     ''' '''
     def __init__(self):
         ''' '''
-    
+        self.cash = 0
+        self.cash_lis = [0, 0, 0, 0, 0, 0, 0]
+        self.unit_lis = []
+        self.cal_lis = [1.8632, 2.5026, 2.7549, 3.1381, 3.2315, 3.7362, 3.9361]
+        
     def homeanddorm(self, unt):
         ''' '''
         #HOME
         if gui.option.get() == 1:
             gui.u1.configure(state='disabled')
             unt = float(u.utt)
-            self.cash = 0
-            self.cash_lis = [0, 0, 0, 0, 0, 0, 0]
-            self.unit_lis = []
-            self.cal_lis = [1.8632, 2.5026, 2.7549, 3.1381, 3.2315, 3.7362, 3.9361]
             if unt > 50:
                 if unt > 400:
                     self.unit_lis.append(unt-400)
