@@ -1,3 +1,9 @@
+'''
+Electricity Bill Calculator for Home and Dorm
+Author : Kununya Sriwong 57070014
+         Thodsapol Yoosook 57070042
+FOR Problem Solving in Information Technology
+'''
 import sys
 from tkinter import *
 
@@ -8,16 +14,16 @@ mgui.title('Electricity Bill Caculator')
 
      
 class Find_cash():
-    ''' '''
+    '''Class for calculate electriccity Bill'''
     def __init__(self):
-        ''' '''
+        '''__init__'''
         self.cash = 0
         self.cash_lis = [0, 0, 0, 0, 0, 0, 0]
         self.unit_lis = []
         self.cal_lis = [1.8632, 2.5026, 2.7549, 3.1381, 3.2315, 3.7362, 3.9361]
         
     def homeanddorm(self, unt):
-        ''' '''
+        '''Class for calculate electriccity Bill For Home And Dorm'''
         #HOME
         if gui.option.get() == 1:
             gui.u1.configure(state='disabled')
@@ -74,24 +80,24 @@ class Find_cash():
 
         #DORM    
         elif gui.option.get() == 0:
-            #Error
-            if unt == '':
+            try:
+                #OUTPUT
+                gui.o1.delete(0, END)
+                gui.o2.delete(0, END)
+                gui.o3.delete(0, END)
+                #Cash
+                gui.o1.insert(1, '%.2f' % (float(unt)* float(u.utt)))
+                #Vat
+                gui.o2.insert(1, '-')
+                #Total
+                gui.o3.insert(1, '%.2f' % (float(unt)* float(u.utt)))
+            except:
                 messagebox.showinfo('Error', 'Please Enter Unit/Bath')
-            #OUTPUT
-            gui.o1.delete(0, END)
-            gui.o2.delete(0, END)
-            gui.o3.delete(0, END)
-            #Cash
-            gui.o1.insert(1, '%.2f' % (float(unt)* float(u.utt)))
-            #Vat
-            gui.o2.insert(1, '-')
-            #Total
-            gui.o3.insert(1, '%.2f' % (float(unt)* float(u.utt)))
             
 class find_unit():
-    ''' '''
+    '''Find unit from each appliances'''
     def __init__(self):
-        ''' '''
+        '''__init__'''
         self.lis = []
         self.unitlis = []
     def valueGET(self, name, amount, power, tmpdy, day):
@@ -102,13 +108,9 @@ class find_unit():
             float(tmpdy)
             float(day)
             self.lis = [name, float(amount), float(power), float(tmpdy), float(day)]
-            print (self.lis)
             self.unit = (self.lis[1])*(self.lis[2])/1000.0*(self.lis[3])*(int(self.lis[4]))
             self.unitlis.append(self.unit)
-            print (self.unitlis)
-            print (self.unit)
             self.utt = (sum(map(float, self.unitlis)))
-            print (self.utt)
             gui.Lb1.insert(1, name+' '+'%.2f' % (self.unit)+' unit')
             gui.e6.delete(0, END)
             gui.e6.insert(0, '%.2f' % sum(self.unitlis))
@@ -119,9 +121,12 @@ class find_unit():
                 )
             
 class Mguiface():
-    ''' '''
+    '''Interface'''
     def __init__(self):
-        ''' '''
+        '''__init__'''
+        
+        self.img = PhotoImage(file='test.png')
+        imgelabel = Label(mgui, image=self.img).place(x=180, y=0)
         #Selected Your Habitat
         mlabel = Label(text='Selected Your Habitat ').place(x=10, y=5)
         self.option = IntVar()
@@ -189,31 +194,32 @@ class Mguiface():
         #Cal
         Cal = Button(mgui, text=' Calculate ', height=0, width=7,\
                      command=lambda: c.homeanddorm(self.u1.get())).place(x=347, y=325)
-        #CLEAR Button
+        #RESET Button
         clear = Button(mgui, text=' Reset ', command=self.clear_text, height=0,\
                     width=6).place(x=155, y=415)
 
         #EXIT Button
         end = Button(mgui, text='  Exit  ', command=mgui.destroy, height=0, \
                  width = 6).place(x=230, y=415)
-
+    #reset
     def clear_text(self):
-            self.e1.delete(0, END)
-            self.e2.delete(0, END)
-            self.e3.delete(0, END)
-            self.e4.delete(0, END)
-            self.e5.delete(0, END)
-            self.e6.delete(0, END)
-            self.o1.delete(0, END)
-            self.o2.delete(0, END)
-            self.o3.delete(0, END)
-            self.Lb1.delete(0, END)
-            self.u1.delete(0, END)
-            u.unitlis = []
-            u.lis = []
+        '''Clear text in program'''
+        self.e1.delete(0, END)
+        self.e2.delete(0, END)
+        self.e3.delete(0, END)
+        self.e4.delete(0, END)
+        self.e5.delete(0, END)
+        self.e6.delete(0, END)
+        self.o1.delete(0, END)
+        self.o2.delete(0, END)
+        self.o3.delete(0, END)
+        self.Lb1.delete(0, END)
+        self.u1.delete(0, END)
+        u.unitlis = []
+        u.lis = []
     #Disable and Enable Unit/Bath Entry
     def dis_ena(self):
-        ''' '''
+        '''For ser status Entry'''
         if gui.option.get() == 1:
             self.u1.delete(0, END)
             self.u1.configure(state='disabled')
@@ -221,10 +227,7 @@ class Mguiface():
         else:
             self.u1.configure(state='normal')
             self.u1.update()
-    #Reset
-    def Reset(self):
-        ''' '''
-        
+
 u = find_unit()
 c = Find_cash()
 gui = Mguiface()
